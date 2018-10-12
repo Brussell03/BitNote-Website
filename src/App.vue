@@ -1,7 +1,7 @@
 <template>
   	<div id="app">
 		<app-header v-bind:activeUser="activeUser" id="app-header"></app-header>
-    	<router-view v-bind:activeUser="activeUser"></router-view>
+    	<router-view></router-view>
   	</div>
 </template>
 
@@ -11,12 +11,7 @@ export default {
 	name: "app",
 	data() {
 		return {
-			activeUser: {
-				active: false,
-				username: '',
-				password: '',
-				id: ''
-			}
+			
 		}
 	},
 	methods: {
@@ -47,9 +42,6 @@ div {
 }
 #app-header {
 	height: 5vh;
-	/*position: sticky;
-	position: -webkit-sticky;
-	top: 0;*/
 	position: fixed;
 	top: 0;
 	width: 100%;

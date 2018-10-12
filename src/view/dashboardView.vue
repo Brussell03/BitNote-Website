@@ -1,7 +1,7 @@
 <template>
     <div id="dashboard">
         <sidebar id="sidebarView" v-bind:activeView="activeView"></sidebar>
-        <notes v-bind:activeUser="activeUser" v-if="activeView.notes" class="contentView"></notes>
+        <notes v-if="activeView.notes" class="contentView"></notes>
         <calendar v-if="activeView.calendar" class="contentView"></calendar>
     </div>
 </template>
@@ -11,21 +11,14 @@ import sidebar from '../components/sidebar.vue';
 import notes from '../components/notes.vue';
 import calendar from '../components/calendar.vue';
 export default {
-	props: {
-        activeUser: {
-            type: Object,
-            required: true
-        }
-    },
     data() {
         return {
-            activeView: {
-                dashboard: false,
-                notes: true,
-                planner: false,
-                groups: false,
-                calendar: false
-            }
+            
+        }
+    },
+    computed: {
+        activeView() {
+            return this.$store.state.activeView;
         }
     },
     components: {

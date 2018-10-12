@@ -24,12 +24,6 @@
 
 <script>
 export default {
-	props: {
-        activeUser: {
-            type: Object,
-            required: true
-        }
-    },
     data () {
         return {
 			edittingNote: false,
@@ -104,6 +98,9 @@ export default {
 		}
 	},
 	computed: {
+		activeUser() {
+			return this.$store.state.activeUser;
+		},
 		updateNote: function(id) {
 			if(this.activeNoteData.shared) {
 				var temp = this.activeNoteData;

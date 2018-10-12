@@ -13,12 +13,6 @@
 
 <script>
 export default {
-    props: {
-        activeUser: {
-            type: Object,
-            required: true
-        }
-    },
     data() {
         return {
             userInput: {
@@ -50,6 +44,11 @@ export default {
             } else {
 
             }
+        }
+    },
+    computed: {
+        activeUser() {
+            return this.$store.state.activeUser;
         }
     }
 }
