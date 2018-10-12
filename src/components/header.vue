@@ -22,16 +22,15 @@
 
 <script>
 export default {
-	props: {
-		activeUser: {
-			type: Object,
-			required: true
-		}
-	},
     data() {
         return {
 
         }
+    },
+    computed: {
+      activeUser() {
+        return this.$store.state.activeUser;
+      }
     }
 }
 </script>
