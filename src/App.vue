@@ -15,10 +15,43 @@ export default {
 		}
 	},
 	beforeMount: function() {
-		this.$store.dispatch('getNotes');
+		if(this.activeUser.active) {
+			this.notes = [];
+			this.$http.get('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes.json').then(function(data) {
+				return data.json();
+			}).then(function(data) {
+				var i = 0
+				for(let key in data) {
+					this.notes.push(data[key]);
+					this.notes[i].id = key;
+					i++;
+					console.log(this.notes[i].id);
+				}
+			});
+			for(var i = 0; i < this.notes.length; i++) {
+				if(this.notes[i].shared === true) {
+					this.$http.get(this.notes[i].shareLink).then(function(data) {
+						return data.json();
+					}).then(function(data) {
+						var temp = this.notes[i].shareLink;
+						this.notes[i] = data;
+						this.notes[i].shared = true;
+						this.notes[i].shareLink = temp;
+					});
+				}
+			}
+		}
 	},
 	components: {
 		'app-header': header
+	},
+	computed: {
+		activeUser() {
+			return this.$store.state.activeUser;
+		},
+        notes() {
+            return this.$store.state.notes;
+        }
 	}
 };
 </script>

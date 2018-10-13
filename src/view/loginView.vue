@@ -38,18 +38,49 @@ export default {
 						this.activeUser.username = this.userInput.username;
                         this.activeUser.password = this.userInput.password;
                         this.activeUser.id = key;
+                        this.activeUser.email = data.email;
                         this.submitted = true;
+                        this.getNotes();
                         //window.location.replace("/dashboard");
                         this.$router.push('/dashboard');
                         //Vuex, bcrypt
 					}
 				}
-			});
-        }
+            });
+        },
+		getNotes: function() {
+			if(this.activeUser.active) {
+				this.$http.get('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes.json').then(function(data) {
+					return data.json();
+				}).then(function(data) {
+					var i = 0
+					for(let key in data) {
+						this.notes.push(data[key]);
+						this.notes[i].id = key;
+                        i++;
+					}
+				});
+				for(var i = 0; i < this.notes.length; i++) {
+					if(this.notes[i].shared === true) {
+						this.$http.get(this.notes[i].shareLink).then(function(data) {
+							return data.json();
+						}).then(function(data) {
+							var temp = this.notes[i].shareLink;
+							this.notes[i] = data;
+							this.notes[i].shared = true;
+							this.notes[i].shareLink = temp;
+						});
+					}
+				}
+			}
+		}
     },
     computed: {
         activeUser() {
             return this.$store.state.activeUser;
+        },
+        notes() {
+            return this.$store.state.notes;
         }
     }
 }
@@ -90,6 +121,7 @@ export default {
     border: none;
     border-radius: 5px;
     font-size: 1.2rem;
+    color: #fff;
 }
 .login-extras {
     display: grid;

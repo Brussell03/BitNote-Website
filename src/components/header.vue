@@ -29,7 +29,7 @@ export default {
 	},
 	methods: {
 		callLogout: function() {
-			this.logout;
+			this.$store.dispatch('logout');
 		}
 	},
 	computed: {

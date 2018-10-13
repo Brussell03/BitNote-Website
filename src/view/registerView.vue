@@ -37,6 +37,11 @@ export default {
                             var newUser = { username: this.userInput.username, password: this.userInput.password, email: '', notes: [{ name: 'First Note', desc: 'Make this your first note!' }], groups: [{ name: 'First Group', desc: 'Make this your first group!' }] };
                             this.$http.post('https://bitnote-50e75.firebaseio.com/users.json', newUser).then(function(data) {
                                 this.submitted = true;
+                                this.activeUser.active = true;
+                                this.activeUser.id = data.date.name;
+                                this.activeUser.name = this.userInput.username;
+                                this.activeUser.password = this.userInput.password;
+                                this.activeUser.email = this.userInput.email;
                             });
                         }
                     }
@@ -55,35 +60,4 @@ export default {
 </script>
 
 <style>
-#login-view {
-    margin: 3em auto;
-    padding: 1em;
-    max-width: 600px;
-    position: relative;
-    top: 5.6vh;
-}
-.login-text {
-    font-size: 2rem;
-    color: #fff;
-}
-.login-input {
-    display: block;
-    width: 100%;
-    height: 2em;
-    margin: 1em 0 1em 0;
-    color: #fff;
-    background: none;
-    border: none;
-    border-bottom: 1px solid #fff;
-    font-size: 1.2rem;
-}
-.login-submit {
-    width: 6em;
-    height: 2.5em;
-    background-color: #5772e9;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    margin: 2em 0 2em 0;
-}
 </style>

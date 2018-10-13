@@ -131,6 +131,7 @@ export default {
     .contentView {
         grid-column: 1 / 9;
         top: 11.6vh;
+        height: 88.4vh;
     }
     .overlay {
         top: 11.6vh;

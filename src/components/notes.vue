@@ -1,17 +1,17 @@
 <template>
     <div class="notesPage">
-		<div class="singleNote" @dblclick="editNote(note)" v-for="note in notes" :key="note.id">
-			<input type="text" v-bind:placeholder="note.name" class="noteTitleInput">
+		<div class="singleNote" @click="activeNoteData = note" @dblclick="editNote(note)" v-for="note in notes" :key="note.id">
+			<input type="text" @click="activeNoteData = note" @keyup="updateNote(note.id)" v-bind:placeholder="note.name" v-model="note.name" class="noteTitleInput">
 			<div>
 				<h3>Details:</h3>
-				<textarea class="noteDetails" v-bind:placeholder="note.desc"></textarea>
+				<textarea class="noteDetails" @click="activeNoteData = note" @keyup="updateNote(note.id)" v-bind:placeholder="note.desc" v-model="note.desc"></textarea>
 				<button class="note-expand" @click="editNote(note)"><h5>+</h5></button>
 			</div>
 		</div>
 		<div class="overlayContainer" v-if="edittingNote">
 			<div class="overlay" @click="edittingNote = false"></div>
 			<div class="overlayCard">
-				<input class="overlay-name" type="text" v-model.lazy="activeNoteData.name" required>
+				<input class="overlay-name" type="text" v-bind:placeholder="activeNoteData.name" v-model.lazy="activeNoteData.name" required>
 				<button class="overlay-leave" @click="updateNote(activeNoteData.id)">X</button>
 				<textarea class="overlay-desc" type="text" v-model.lazy="activeNoteData.desc"></textarea>
 				<input class="overlay-date" type="date" v-model.lazy="activeNoteData.date">
@@ -54,42 +54,16 @@ export default {
 			this.edittingNote = true;
 		},
 		newNote: function() {
-			//this.$store.dispatch('newNote');
 			if(this.activeUser.active) {
-				this.$http.post('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes.json', this.defaultNoteData).then(function(data) {
-					//console.log(key);
-					this.notes.push(this.defaultNoteData);
-					//this.notes[this.notes.length].id = key;
-					
-					console.log(this.notes[this.notes.length - 1]);
-					this.setIds();
+				this.$http.post('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes.json', Object.assign({}, this.defaultNoteData)).then(function(data) {
+					this.notes.push(Object.assign({}, this.defaultNoteData));
+					this.notes[this.notes.length - 1].id = data.data.name;
 				});
 			}
 		},
-		setIds: function() {
-			console.log('-setIds-');
-			this.$http.get('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes.json').then(function(data) {
-				return data.json();
-			}).then(function(data) {
-				var i = 0
-				for(let key in data) {
-					this.notes[key].id = key;
-					this.$http.put('https://bitnote-50e75.firebasoio.com/users/' + this.activeUser.id + '/notes/' + key + '.json', this.notes[key]).then(function(data) {
-						return data.json();
-					});
-					i++;
-				}
-			});
-		}
-	},
-	computed: {
-		activeUser() {
-			return this.$store.state.activeUser;
-		},
-		notes() {
-			return this.$store.state.notes;
-		},
 		updateNote: function(id) {
+			console.log(this.activeNoteData);
+			console.log(id);
 			if(this.activeNoteData.shared) {
 				var temp = this.activeNoteData;
 				temp.shared = false;
@@ -98,11 +72,19 @@ export default {
 					return data.json();
 				});
 			} else {
-				this.$http.put('https://bitnote-50e75.firebasioio.com/users/' + this.activeUser.id + '/notes/' + this.activeNoteData.id + '.json', this.activeNoteData).then(function(data) {
+				this.$http.put('https://bitnote-50e75.firebasioio.com/users/' + this.activeUser.id + '/notes/' + id + '.json', this.activeNoteData).then(function(data) {
 					return data.json();
 				});
 			}
 			this.edittingNote = false;
+		}
+	},
+	computed: {
+		activeUser() {
+			return this.$store.state.activeUser;
+		},
+		notes() {
+			return this.$store.state.notes;
 		}
 	}
 }
@@ -112,7 +94,6 @@ export default {
 .notesPage {
 	padding: 2em;
 	display: inline-grid;
-	/*grid-template-columns: minmax(1fr, repeat(5, 1fr));*/
 	grid-template-columns: repeat(auto-fill, minmax(10em, 18em));
 	grid-auto-rows: 14em;
 	grid-gap: 2em;
