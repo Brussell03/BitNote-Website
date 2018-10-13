@@ -42,6 +42,10 @@ export default {
 	z-index: 100;
     height: 94.4vh;
     width: 12.5%;
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 .contentView {
     position: relative;
@@ -51,10 +55,10 @@ export default {
 }
 .overlay {
 	position: fixed;
-	top: 2em;
-	left: 0;
+	top: 5.6vh;
+	left: 12.5%;
 	right: 0;
-	bottom: 0;
+	bottom: 100vh;
 	background-color: #222;
 	opacity: 0.8;
 	z-index: 1000;
@@ -115,5 +119,22 @@ export default {
     grid-row: 9;
     grid-column: 2/4;
     border-radius: 10px;
+}
+@media only screen and (max-width: 1400px) {
+    #sidebarView {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 6vh;
+    }
+    .contentView {
+        grid-column: 1 / 9;
+        top: 11.6vh;
+    }
+    .overlay {
+        top: 11.6vh;
+        left: 0;
+    }
 }
 </style>

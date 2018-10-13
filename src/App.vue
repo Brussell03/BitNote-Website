@@ -1,6 +1,6 @@
 <template>
   	<div id="app">
-		<app-header v-bind:activeUser="activeUser" id="app-header"></app-header>
+		<app-header id="app-header"></app-header>
     	<router-view></router-view>
   	</div>
 </template>
@@ -14,8 +14,8 @@ export default {
 			
 		}
 	},
-	methods: {
-		
+	beforeMount: function() {
+		this.$store.dispatch('getNotes');
 	},
 	components: {
 		'app-header': header

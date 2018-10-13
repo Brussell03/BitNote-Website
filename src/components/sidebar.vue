@@ -1,13 +1,11 @@
 <template>
-    <nav id="sidebar">
-        <ul>
-            <li class="sidebarLink" @click="changeView(1)">Dashboard</li>
-            <li class="sidebarLink" @click="changeView(2)">Notes</li>
-            <li class="sidebarLink" @click="changeView(3)">Planner</li>
-            <li class="sidebarLink" @click="changeView(4)">Groups</li>
-            <li class="sidebarLink" @click="changeView(5)">Calendar</li>
-        </ul>
-    </nav>
+    <ul>
+        <li class="sidebarLink" @click="changeView(1)">Dashboard</li>
+        <li class="sidebarLink" @click="changeView(2)">Notes</li>
+        <li class="sidebarLink" @click="changeView(3)">Planner</li>
+        <li class="sidebarLink" @click="changeView(4)">Groups</li>
+        <li class="sidebarLink" @click="changeView(5)">Calendar</li>
+    </ul>
 </template>
 
 <script>
@@ -62,12 +60,6 @@ export default {
 </script>
 
 <style>
-#sidebar ul {
-    list-style-type: none;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
 .sidebarLink {
     color: #fff;
     text-decoration: none;
@@ -78,5 +70,12 @@ export default {
 }
 .sidebarLink:hover {
     background-color: #333;
+}
+@media only screen and (max-width: 1400px) {
+    .sidebarLink {
+        width: 6em;
+        height: 6vh;
+        line-height: 1.5;
+    }
 }
 </style>

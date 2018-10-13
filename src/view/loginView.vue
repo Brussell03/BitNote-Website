@@ -5,7 +5,7 @@
             <input class="login-input" type="text" placeholder="Username" v-model.lazy="userInput.username" required>
             <input class="login-input" type="password" placeholder="Password" v-model.lazy="userInput.password" required>
             <div class="login-buttons">
-                <button class="login-submit" @click="submitLogin">Login</button>
+                <button class="login-submit" @click="submitLogin()">Login</button>
                 <div class="login-extras">
                     <router-link to="/register" class="login-extra">Register Here</router-link>
                     <router-link to="/password/forgot" class="login-extra">Forgot your password?</router-link>
@@ -40,6 +40,7 @@ export default {
                         this.activeUser.id = key;
                         this.submitted = true;
                         //window.location.replace("/dashboard");
+                        this.$router.push('/dashboard');
                         //Vuex, bcrypt
 					}
 				}

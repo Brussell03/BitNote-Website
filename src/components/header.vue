@@ -14,7 +14,7 @@
 			<div class="dropdown" v-show="this.activeUser.active">
 				<span class="header-hover">{{ activeUser.username }}</span>
 				<div class="dropdown-content">Settings</div>
-				<div class="dropdown-content">Logout</div>
+				<div class="dropdown-content" @click="callLogout()">Logout</div>
 			</div>
         </div>
     </nav>
@@ -22,17 +22,24 @@
 
 <script>
 export default {
-	props: {
-		activeUser: {
-			type: Object,
-			required: true
-		}
-	},
     data() {
         return {
 
         }
-    }
+	},
+	methods: {
+		callLogout: function() {
+			this.logout;
+		}
+	},
+	computed: {
+		logout() {
+			return this.$store.actions.logout;
+		},
+		activeUser() {
+			return this.$store.state.activeUser;
+		}
+	}
 }
 </script>
 
