@@ -30,6 +30,7 @@ export default {
 	methods: {
 		callLogout: function() {
 			this.$store.dispatch('logout');
+			window.location.replace('/');
 		}
 	},
 	computed: {

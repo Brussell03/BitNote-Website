@@ -16,7 +16,6 @@ export default {
 	},
 	beforeMount: function() {
 		if(this.activeUser.active) {
-			this.notes = [];
 			this.$http.get('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes.json').then(function(data) {
 				return data.json();
 			}).then(function(data) {
@@ -25,21 +24,27 @@ export default {
 					this.notes.push(data[key]);
 					this.notes[i].id = key;
 					i++;
-					console.log(this.notes[i].id);
+				}
+				console.log(1);
+				console.log(this.notes.length);
+				for(var i = 0; i < this.notes.length; i++) {
+					console.log(2);
+					if(this.notes[i].shared === true) {
+						console.log(3);
+						console.log(this.notes[i]);
+						console.log(this.notes[i].shareLink);
+						var link = this.notes[i].shareLink;
+						this.$http.get(this.notes[i].shareLink).then(function(data) {
+							return data.json();
+						}).then(function(data) {
+							this.notes[i] = data;
+							console.log(this.notes[i]);
+							this.notes[i].shared = true;
+							this.notes[i].shareLink = link;
+						});
+					}
 				}
 			});
-			for(var i = 0; i < this.notes.length; i++) {
-				if(this.notes[i].shared === true) {
-					this.$http.get(this.notes[i].shareLink).then(function(data) {
-						return data.json();
-					}).then(function(data) {
-						var temp = this.notes[i].shareLink;
-						this.notes[i] = data;
-						this.notes[i].shared = true;
-						this.notes[i].shareLink = temp;
-					});
-				}
-			}
 		}
 	},
 	components: {

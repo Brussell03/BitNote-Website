@@ -41,9 +41,7 @@ export default {
                         this.activeUser.email = data.email;
                         this.submitted = true;
                         this.getNotes();
-                        //window.location.replace("/dashboard");
                         this.$router.push('/dashboard');
-                        //Vuex, bcrypt
 					}
 				}
             });
@@ -58,20 +56,28 @@ export default {
 						this.notes.push(data[key]);
 						this.notes[i].id = key;
                         i++;
-					}
-				});
-				for(var i = 0; i < this.notes.length; i++) {
-					if(this.notes[i].shared === true) {
-						this.$http.get(this.notes[i].shareLink).then(function(data) {
-							return data.json();
-						}).then(function(data) {
-							var temp = this.notes[i].shareLink;
-							this.notes[i] = data;
-							this.notes[i].shared = true;
-							this.notes[i].shareLink = temp;
-						});
-					}
-				}
+                    }
+                    console.log(1);
+                    console.log(this.notes.length);
+                    for(var i = 0; i < this.notes.length; i++) {
+                        console.log(2);
+                        if(this.notes[i].shared === true) {
+                            console.log(3);
+                            console.log(this.notes[i]);
+                            console.log(this.notes[i].shareLink);
+                            var link = this.notes[i].shareLink;
+                            console.log(link);
+                            this.$http.get(this.notes[i].shareLink).then(function(data) {
+                                return data.json();
+                            }).then(function(data) {
+                                this.notes[i] = data;
+                                console.log(this.notes[i]);
+                                this.notes[i].shared = true;
+                                this.notes[i].shareLink = link;
+                            });
+                        }
+                    }
+                });
 			}
 		}
     },

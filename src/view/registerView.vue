@@ -34,7 +34,7 @@ export default {
                         if(data[key].username === this.userInput.username) {
                             console.log('Username taken');
                         } else {
-                            var newUser = { username: this.userInput.username, password: this.userInput.password, email: '', notes: [{ name: 'First Note', desc: 'Make this your first note!' }], groups: [{ name: 'First Group', desc: 'Make this your first group!' }] };
+                            var newUser = { username: this.userInput.username, password: this.userInput.password, email: '', notes: [Object.assign({}, defaultNoteData)], groups: [{ name: 'First Group', desc: 'Make this your first group!' }] };
                             this.$http.post('https://bitnote-50e75.firebaseio.com/users.json', newUser).then(function(data) {
                                 this.submitted = true;
                                 this.activeUser.active = true;
@@ -42,6 +42,7 @@ export default {
                                 this.activeUser.name = this.userInput.username;
                                 this.activeUser.password = this.userInput.password;
                                 this.activeUser.email = this.userInput.email;
+                                this.$router.push('/dashboard');
                             });
                         }
                     }
@@ -54,6 +55,9 @@ export default {
     computed: {
         activeUser() {
             return this.$store.state.activeUser;
+        },
+        defaultNoteData() {
+            return this.$store.state.defaultNoteData;
         }
     }
 }

@@ -3,7 +3,7 @@
         <li class="sidebarLink" @click="changeView(1)">Dashboard</li>
         <li class="sidebarLink" @click="changeView(2)">Notes</li>
         <li class="sidebarLink" @click="changeView(3)">Planner</li>
-        <li class="sidebarLink" @click="changeView(4)">Groups</li>
+        <li class="sidebarLink" @click="changeView(4)">Lists</li>
         <li class="sidebarLink" @click="changeView(5)">Calendar</li>
     </ul>
 </template>
@@ -27,31 +27,31 @@ export default {
                 this.activeView.dashboard = true;
                 this.activeView.notes = false;
                 this.activeView.planner = false;
-                this.activeView.groups = false;
+                this.activeView.list = false;
                 this.activeView.calendar = false;
             } else if(num === 2) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = true;
                 this.activeView.planner = false;
-                this.activeView.groups = false;
+                this.activeView.list = false;
                 this.activeView.calendar = false;
             } else if(num === 3) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = false;
                 this.activeView.planner = true;
-                this.activeView.groups = false;
+                this.activeView.list = false;
                 this.activeView.calendar = false;
             } else if(num === 4) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = false;
                 this.activeView.planner = false;
-                this.activeView.groups = true;
+                this.activeView.list = true;
                 this.activeView.calendar = false;
             } else if(num === 5) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = false;
                 this.activeView.planner = false;
-                this.activeView.groups = false;
+                this.activeView.list = false;
                 this.activeView.calendar = true;
             }
         }

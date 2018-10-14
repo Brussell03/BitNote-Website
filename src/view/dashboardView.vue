@@ -1,8 +1,9 @@
 <template>
     <div id="dashboard">
         <sidebar id="sidebarView" v-bind:activeView="activeView"></sidebar>
-        <notes v-if="activeView.notes" class="contentView"></notes>
-        <calendar v-if="activeView.calendar" class="contentView"></calendar>
+        <notes v-show="activeView.notes" class="contentView"></notes>
+        <lists v-show="activeView.groups" class="contentView"></lists>
+        <calendar v-show="activeView.calendar" class="contentView"></calendar>
     </div>
 </template>
 
@@ -10,6 +11,7 @@
 import sidebar from '../components/sidebar.vue';
 import notes from '../components/notes.vue';
 import calendar from '../components/calendar.vue';
+import lists from '../components/lists.vue';
 export default {
     data() {
         return {
@@ -24,7 +26,8 @@ export default {
     components: {
         'sidebar': sidebar,
         'notes': notes,
-        'calendar': calendar
+        'calendar': calendar,
+        'lists': groups
     }
 }
 </script>
@@ -58,12 +61,12 @@ export default {
 	top: 5.6vh;
 	left: 12.5%;
 	right: 0;
-	bottom: 100vh;
+	bottom: 0;
 	background-color: #222;
 	opacity: 0.8;
 	z-index: 1000;
 }
-.overlayCard {
+.overlay-card {
 	position: fixed;
 	top: 10%;
 	left: 30%;
@@ -112,13 +115,85 @@ export default {
     grid-row: 7;
     grid-column: 2/8;
 }
-.overlay-submit {
+.overlay-buttons {
+    display: flex;
+    grid-row: 9;
+    grid-column: 2 / 10;
+    width: 100%;
+}
+.overlay-button {
+    flex: 1;
     background-color: #5772e9;
     font-size: 1.6rem;
     border: none;
-    grid-row: 9;
-    grid-column: 2/4;
     border-radius: 10px;
+    width: 4em;
+    height: 100%;
+    color: #fff;
+}
+.overlay-button:first-child {
+    margin-right: 25%;
+}
+.overlay-button:last-child {
+    align-items: flex-end;
+    margin-left: 25%;
+}
+.overlay-share {
+    background-color: #5772e9;
+    border-radius: 10px;
+    grid-row: 4;
+    grid-column: 2 / 5;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 1.6rem;
+    color: #fff;
+}
+.shared-users {
+    grid-row: 6 / 10;
+    grid-column: 2 / 10;
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+}
+.shared-users-title {
+    font-size: 1.6rem;
+    width: 100%;
+    position: relative;
+}
+.shared-users-title::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    height: 2px;
+    background: #000;
+    width: 60%;
+    left: 38%;
+    top: calc(50% - 1px);
+}
+.shared-name {
+    font-size: 1rem;
+    color: #242424;
+    margin: 10px 0 10px 1em;
+}
+.shared-name::before {
+    height: 1rem;
+    width: 5px;
+    background-color: #242424;
+}
+.share-pass {
+    grid-row: 4;
+    grid-column: 5/10;
+    color: #1c7a24;
+    font-size: 1.6rem;
+    margin: auto;
+}
+.share-fail {
+    grid-row: 4;
+    grid-column: 5 / 10;
+    color: #b83434;
+    font-size: 1.6rem;
+    margin: auto;
 }
 @media only screen and (max-width: 1400px) {
     #sidebarView {
