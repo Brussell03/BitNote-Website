@@ -24,34 +24,37 @@ export default {
     methods: {
         changeView: function(num) {
             if(num === 1) {
-                this.activeView.dashboard = true;
+                /*this.activeView.dashboard = true;
                 this.activeView.notes = false;
                 this.activeView.planner = false;
-                this.activeView.list = false;
-                this.activeView.calendar = false;
+                this.activeView.lists = false;
+                this.activeView.calendar = false;*/
+                alert('This feature is not yet available');
             } else if(num === 2) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = true;
                 this.activeView.planner = false;
-                this.activeView.list = false;
+                this.activeView.lists = false;
                 this.activeView.calendar = false;
+                
             } else if(num === 3) {
-                this.activeView.dashboard = false;
+                /*this.activeView.dashboard = false;
                 this.activeView.notes = false;
                 this.activeView.planner = true;
-                this.activeView.list = false;
-                this.activeView.calendar = false;
+                this.activeView.lists = false;
+                this.activeView.calendar = false;*/
+                alert('This feature is not yet available');
             } else if(num === 4) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = false;
                 this.activeView.planner = false;
-                this.activeView.list = true;
+                this.activeView.lists = true;
                 this.activeView.calendar = false;
             } else if(num === 5) {
                 this.activeView.dashboard = false;
                 this.activeView.notes = false;
                 this.activeView.planner = false;
-                this.activeView.list = false;
+                this.activeView.lists = false;
                 this.activeView.calendar = true;
             }
         }

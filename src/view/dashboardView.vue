@@ -2,7 +2,7 @@
     <div id="dashboard">
         <sidebar id="sidebarView" v-bind:activeView="activeView"></sidebar>
         <notes v-show="activeView.notes" class="contentView"></notes>
-        <lists v-show="activeView.groups" class="contentView"></lists>
+        <lists v-show="activeView.lists" class="contentView"></lists>
         <calendar v-show="activeView.calendar" class="contentView"></calendar>
     </div>
 </template>
@@ -27,7 +27,7 @@ export default {
         'sidebar': sidebar,
         'notes': notes,
         'calendar': calendar,
-        'lists': groups
+        'lists': lists
     }
 }
 </script>

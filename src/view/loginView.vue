@@ -41,6 +41,7 @@ export default {
                         this.activeUser.email = data.email;
                         this.submitted = true;
                         this.getNotes();
+                        this.getLists();
                         this.$router.push('/dashboard');
 					}
 				}
@@ -57,23 +58,41 @@ export default {
 						this.notes[i].id = key;
                         i++;
                     }
-                    console.log(1);
-                    console.log(this.notes.length);
                     for(var i = 0; i < this.notes.length; i++) {
-                        console.log(2);
                         if(this.notes[i].shared === true) {
-                            console.log(3);
-                            console.log(this.notes[i]);
-                            console.log(this.notes[i].shareLink);
                             var link = this.notes[i].shareLink;
-                            console.log(link);
                             this.$http.get(this.notes[i].shareLink).then(function(data) {
                                 return data.json();
                             }).then(function(data) {
                                 this.notes[i] = data;
-                                console.log(this.notes[i]);
                                 this.notes[i].shared = true;
                                 this.notes[i].shareLink = link;
+                            });
+                        }
+                    }
+                });
+			}
+		},
+		getLists: function() {
+			if(this.activeUser.active) {
+				this.$http.get('https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/lists.json').then(function(data) {
+					return data.json();
+				}).then(function(data) {
+					var i = 0
+					for(let key in data) {
+						this.lists.push(data[key]);
+						this.lists[i].id = key;
+                        i++;
+                    }
+                    for(var i = 0; i < this.lists.length; i++) {
+                        if(this.lists[i].shared === true) {
+                            var link = this.lists[i].shareLink;
+                            this.$http.get(this.lists[i].shareLink).then(function(data) {
+                                return data.json();
+                            }).then(function(data) {
+                                this.lists[i] = data;
+                                this.lists[i].shared = true;
+                                this.lists[i].shareLink = link;
                             });
                         }
                     }
@@ -87,6 +106,9 @@ export default {
         },
         notes() {
             return this.$store.state.notes;
+        },
+        lists() {
+            return this.$store.state.lists;
         }
     }
 }

@@ -16,13 +16,14 @@ export const store = new Vuex.Store({
 			dashboard: false,
 			notes: true,
 			planner: false,
-			list: false,
+			lists: false,
 			calendar: false
 		},
 		notes: [],
+		lists: [],
 		defaultNoteData: { id: '', name: 'New Note', desc: 'Give further details... (Optional)', date: new Date(), shared: false, shareLink: '', sharedWith: ['Start'] },
-		defaultListData: { id: '', name: 'New List', desc: '', items: [], date: new Date(), shared: false, shareLink: '', sharedWith: [] },
-		defaultListItem: { id: '', name: '', checked: false }
+		defaultListData: { id: '', name: 'New List', desc: 'Give further details...', type: 'Checklist', items: [ { id: '', name: 'First Item', checked: false } ], date: new Date(), shared: false, shareLink: '', sharedWith: ['Start'] },
+		defaultItemData: { id: '', name: '', checked: false }
 	},
 	mutations: {
 		logout(state) {

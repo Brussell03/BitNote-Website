@@ -68,7 +68,6 @@ export default {
 					}
 				}
 				if(!this.shareFail1) {
-					console.log('Passed share trials');
 					this.$http.get('https://bitnote-50e75.firebaseio.com/users.json').then(function(data) {
 						return data.json();
 					}).then(function(data) {
@@ -77,7 +76,6 @@ export default {
 							if(data[key].username === username) {
 								this.$http.post('https://bitnote-50e75.firebaseio.com/users/' + key + '/notes.json', 
 								{ id: '', name: '', desc: '', date: new Date(), shared: true, shareLink: 'https://bitnote-50e75.firebaseio.com/users/' + this.activeUser.id + '/notes/' + this.activeNoteData.id + '.json', sharedWith: ['Start'] }).then(function(data) {
-									console.log('Note shared');
 									userFound = true;
 									this.activeNoteData.sharedWith.push(username);
 									this.shareSuccess = true;
@@ -100,8 +98,6 @@ export default {
 		editNote: function(note) {
 			this.activeNoteData = note;
 			this.edittingNote = true;
-			console.log(note);
-			console.log(this.activeNoteData);
 		},
 		newNote: function() {
 			if(this.activeUser.active) {
@@ -112,12 +108,10 @@ export default {
 			}
 		},
 		updateNote: function(id) {
-			console.log(this.activeNoteData);
 			if(this.activeNoteData.shared) {
 				var temp = Object.assign({}, this.activeNoteData);
 				temp.shared = false;
 				temp.shareLink = '';
-				console.log(this.activeNoteData.shareLink);
 				this.$http.put(this.activeNoteData.shareLink, temp).then(function(data) {
 					return data.json();
 				});
