@@ -116,7 +116,13 @@ export default {
         },
         defaultListData() {
             return this.$store.state.defaultListData;
-        }
+        },
+        notes() {
+        	return this.$store.state.notes;
+		},
+		lists() {
+			return this.$store.state.lists;
+		}
     }
 }
 </script>
